@@ -45,7 +45,7 @@
   "scripts": {
     "doc": "typedoc",
     "test": "vitest run",
-    "coverage": "vitest run --coverage --coverage.include=src/**/*.ts",
+    "coverage": "vitest run --coverage --coverage.include=src/*.ts",
     "build": "tsc",
     "start": "npm run build && node dist/ejercicio-1.js",
     "ej1": "node dist/ejercicio-1.js",
