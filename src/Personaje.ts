@@ -1,4 +1,4 @@
-export abstract class Personajes {
+export abstract class Personaje {
   constructor(protected _ID: number, protected _nombre: string, protected _ubicacion: string) {
   }
   get ID(): number {

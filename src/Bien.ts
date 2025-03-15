@@ -1,5 +1,5 @@
 type materialBienes = "Acero de Mahakam" | "cuero endurecido" | "esencia mágica" | "mutágenos de bestias antiguas";
-export class Bienes {
+export class Bien {
   constructor(private _ID: number, private _nombre: string, private _descripcion: string, private _material: materialBienes, private _peso: number, private _valorEnCoronas: number) {}   
   get ID(): number {
     return this._ID;
