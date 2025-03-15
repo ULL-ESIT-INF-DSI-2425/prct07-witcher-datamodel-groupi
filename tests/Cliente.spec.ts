@@ -7,5 +7,7 @@ describe("THE WITCHER - Probando Clase Cliente", ()=> {
   test("Prueba getter del ID del cliente", ()=> {
     expect(cliente.ID).toBe(24);
   });
-  test("Prueba getter del ")
+  test("Prueba getter del nombre del cliente", () => {
+    expect(cliente.nombre).toBe("Estelita");
+  });
 });
