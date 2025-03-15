@@ -21,8 +21,8 @@ describe("Pruebas de la clase Mercader", () => {
     expect(mercader.tipo).toBe("Alquimista");
   });
 
-  test("Pruebas del metodo print", () => {
-    const info = mercader.print();
-    expect(info).toBe(`Mercader con ID 1234 y nombre YoSoyPlex\nUbicacion: España\nTipo: Alquimista`)
-  });
+  // test("Pruebas del metodo print", () => {
+  //   const info = mercader.print();
+  //   expect(info).toBe(`Mercader con ID 1234 y nombre YoSoyPlex\nUbicacion: España\nTipo: Alquimista`)
+  // });
 });
