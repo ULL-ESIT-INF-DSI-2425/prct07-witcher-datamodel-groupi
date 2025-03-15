@@ -16,6 +16,14 @@ describe("Pruebas de la clase Mercader", () => {
     expect(mercader.ID).toBe(1234);
   })
 
+  test("Getter del nombre del mercader", () => {
+    expect(mercader.nombre).toBe("YoSoyPlex");
+  });
+
+  test("Getter de la ubicacion", () => {
+    expect(mercader.ubicacion).toBe("España");
+  });
+
   test("Setter del tipo", () => {
     mercader.tipo =  "Alquimista";
     expect(mercader.tipo).toBe("Alquimista");
@@ -23,6 +31,22 @@ describe("Pruebas de la clase Mercader", () => {
 
   test("Pruebas del metodo print", () => {
     const info = mercader.print();
-    expect(info).toBe(`Mercader con ID 1234 y nombre YoSoyPlex\nUbicacion: España\nTipo: Alquimista`);
+    const expectInfo = `Mercader con ID 1234 y nombre YoSoyPlex\nUbicacion: España\nTipo: Alquimista`;
+    expect(info).toBe(expectInfo);
+  });
+
+  test("Setter del ID", () => {
+    mercader.ID = 1212;
+    expect(mercader.ID).toBe(1212);
+  });
+
+  test("Setter de la ubicacion", () => {
+    mercader.ubicacion = "Tacoronte";
+    expect(mercader.ubicacion).toBe("Tacoronte");
+  });
+
+  test("Setter del nombre", () => {
+    mercader.nombre = "Plex";
+    expect(mercader.nombre).toBe("Plex");
   });
 });
