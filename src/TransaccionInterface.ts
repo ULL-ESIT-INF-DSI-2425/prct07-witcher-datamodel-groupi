@@ -2,7 +2,7 @@ import { Bien } from "./Bien.ts"
 import { Mercader } from "./Mercader.ts"
 import { Cliente } from "./Cliente.ts"
 
-type tipoTransaccion = "venta" | "compra" | "devolucion"
+export type tipoTransaccion = "venta" | "compra" | "devolucion"
 
 export interface Transaccion {
   tipo: tipoTransaccion;
