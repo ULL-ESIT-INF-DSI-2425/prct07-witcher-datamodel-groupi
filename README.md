@@ -10,3 +10,5 @@
 [![Tests](https://github.com/ULL-ESIT-INF-DSI-2425/prct07-witcher-datamodel-groupi/actions/workflows/ci.yml/badge.svg)](https://github.com/ULL-ESIT-INF-DSI-2425/prct07-witcher-datamodel-groupi/actions/workflows/ci.yml)
 
 [![Coverage Status](https://coveralls.io/repos/github/ULL-ESIT-INF-DSI-2425/prct07-witcher-datamodel-groupi/badge.svg?branch=main)](https://coveralls.io/github/ULL-ESIT-INF-DSI-2425/prct07-witcher-datamodel-groupi?branch=main)
+
+[! Link al libro](https://puntoq.ull.es/permalink/34ULL_INST/kkpv9/alma991000487140308901)
