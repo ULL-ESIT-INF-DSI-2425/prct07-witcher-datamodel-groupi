@@ -1,7 +1,7 @@
 import { Bien } from "./Bien.ts";
 import { Cliente } from "./Cliente.ts";
 import { Mercader } from "./Mercader.ts";
-import { Transaccion } from "./TransaccionInterface.ts";
+import { Transaccion } from "./Transaccion.ts";
 import { Inventario } from "./Inventario.ts";
 
 function Introduccion() : void {
@@ -9,7 +9,9 @@ function Introduccion() : void {
   console.log("LOS BIENES ACTUALES, LOS MERCADERES DISPONIBLES, Y CREAR O ELIMINAR JUGADORES Y ELEMENTOS DEL JUEGO.\nEmpecemos a jugar...\n");
 }
 
-
+let Clientes : Cliente[] = [];
+let Mercaderes : Mercader[] = [];
+let Bienes : Bien[] = [];
 
 // MAIN
 Introduccion();
