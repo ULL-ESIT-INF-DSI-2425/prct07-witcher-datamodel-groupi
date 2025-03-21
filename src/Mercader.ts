@@ -1,6 +1,6 @@
 import { Personaje } from "./Personaje.ts";
 
-type tipoMercader = "Herrero" | "Alquimista" | "Mercader general";
+export type tipoMercader = "Herrero" | "Alquimista" | "Mercader general";
 
 /**
  * Clase para representar un mercader
