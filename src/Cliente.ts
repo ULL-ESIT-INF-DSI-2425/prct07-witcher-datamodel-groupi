@@ -1,6 +1,6 @@
 import { Personaje } from "./Personaje.ts";
 
-export type razaCliente = "Humano" | "elfo" | "enano" | "hechicero";
+export type razaCliente = "Humano" | "Elfo" | "Enano" | "Hechicero";
 
 /**
  * Clase para representar los clientes

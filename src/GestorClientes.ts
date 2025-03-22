@@ -58,6 +58,10 @@ export class GestorCliente {
   buscarNombre(nombre: string): Cliente[] {
     return this.coleccionClientes.filter(cliente => cliente.nombre.toLowerCase() === nombre.toLowerCase());
   }
+
+  buscarID(id : number) : Cliente | undefined {
+    return this.coleccionClientes.find(cliente => cliente.ID === id);
+  }
   /**
    * Método para localizar a clientes por su raza
    * @param raza - raza del cliente
