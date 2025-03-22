@@ -59,9 +59,6 @@ export class GestorCliente {
     return this.coleccionClientes.filter(cliente => cliente.nombre.toLowerCase() === nombre.toLowerCase());
   }
 
-  buscarID(id : number) : Cliente | undefined {
-    return this.coleccionClientes.find(cliente => cliente.ID === id);
-  }
   /**
    * Método para localizar a clientes por su raza
    * @param raza - raza del cliente
@@ -77,5 +74,35 @@ export class GestorCliente {
    */
   buscarUbicacion(ubicacion: string): Cliente[] {
     return this.coleccionClientes.filter(cliente => cliente.ubicacion === ubicacion);
+  }
+  buscarID(id : number) : Cliente | undefined {
+    return this.coleccionClientes.find(cliente => cliente.ID === id);
+  }
+  getIDs(): number[] {
+    return this._coleccionClientes.map(cliente => cliente.ID);
+  }
+  modificarRaza(id: number, nuevaRaza: razaCliente): boolean {
+    const cliente = this.buscarID(id);
+    if (!cliente) {
+      return false;
+    } 
+    cliente.raza = nuevaRaza;
+    return true;
+  }
+  modificarNombre(id: number, nuevoNombre: string): boolean {
+    const cliente = this.buscarID(id);
+    if (!cliente) {
+      return false;
+    } 
+    cliente.nombre = nuevoNombre;
+    return true;
+  }
+  modificarUbicacion(id: number, nuevaUbicacion: string): boolean {
+    const cliente = this.buscarID(id);
+    if (!cliente) {
+      return false;
+    } 
+    cliente.ubicacion = nuevaUbicacion;
+    return true;
   }
 }

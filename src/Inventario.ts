@@ -1,4 +1,4 @@
-import { Bien } from "./Bien.ts";
+import { Bien, materialBienes} from "./Bien.ts";
 
 type modoOrdenar = "alfa" | "coronas";
 type orden = "asc" | "desc";
@@ -74,5 +74,35 @@ export class Inventario  {
         return ordenElegido === "asc" ? 1 : -1;
       }
     }).map(bien => bien.ID)
+  }
+  buscarID(id : number) : Bien | undefined {
+    return this.coleccionBienes.find(bien => bien.ID === id);
+  }
+  getIDs(): number[] {
+    return this._coleccionBienes.map(bien => bien.ID);
+  }
+  modificarDescripcion(id: number, nuevaDescripcion: string): boolean {
+    const bien = this.buscarID(id);
+    if (!bien) {
+      return false;
+    } 
+    bien.descripcion = nuevaDescripcion;
+    return true;
+  }
+  modificarNombre(id: number, nuevoNombre: string): boolean {
+    const bien = this.buscarID(id);
+    if (!bien) {
+      return false;
+    } 
+    bien.nombre = nuevoNombre;
+    return true;
+  }
+  modificarMaterial(id: number, nuevoMaterial: materialBienes): boolean {
+    const bien = this.buscarID(id);
+    if (!bien) {
+      return false;
+    } 
+    bien.material = nuevoMaterial;
+    return true;
   }
 }

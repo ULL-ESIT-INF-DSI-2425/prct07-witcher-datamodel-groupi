@@ -74,4 +74,34 @@ export class GestorMercader {
   buscarUbicacion(ubicacion: string): Mercader[] {
     return this.coleccionMercaderes.filter(mercader => mercader.ubicacion === ubicacion);
   }
+  buscarID(id : number) : Mercader | undefined {
+    return this.coleccionMercaderes.find(mercader => mercader.ID === id);
+  }
+  getIDs(): number[] {
+    return this._coleccionMercaderes.map(mercader => mercader.ID);
+  }
+  modificarTipo(id: number, nuevoTipo: tipoMercader): boolean {
+    const mercader = this.buscarID(id);
+    if (!mercader) {
+      return false;
+    } 
+    mercader.tipo = nuevoTipo;
+    return true;
+  }
+  modificarNombre(id: number, nuevoNombre: string): boolean {
+    const mercader = this.buscarID(id);
+    if (!mercader) {
+      return false;
+    } 
+    mercader.nombre = nuevoNombre;
+    return true;
+  }
+  modificarUbicacion(id: number, nuevaUbicacion: string): boolean {
+    const mercader = this.buscarID(id);
+    if (!mercader) {
+      return false;
+    } 
+    mercader.ubicacion = nuevaUbicacion;
+    return true;
+  }
 }

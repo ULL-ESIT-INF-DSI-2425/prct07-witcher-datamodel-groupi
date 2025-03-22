@@ -1,4 +1,4 @@
-type materialBienes = "Acero de Mahakam" | "cuero endurecido" | "esencia mágica" | "mutágenos de bestias antiguas";
+export type materialBienes = "Acero de Mahakam" | "cuero endurecido" | "esencia mágica" | "mutágenos de bestias antiguas";
 /**
  * Clase para representar los bienes
  */
