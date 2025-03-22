@@ -1,7 +1,7 @@
 import { describe, test, expect } from "vitest"
 import { Cliente } from "../src/Cliente"
 
-const cliente = new Cliente(24, "Estelita", "C/ Mojica", "elfo")
+const cliente = new Cliente(24, "Estelita", "C/ Mojica", "Elfo")
 
 describe("THE WITCHER - Probando Clase Cliente", ()=> {
   test("Prueba getter del ID del cliente", ()=> {
@@ -17,7 +17,7 @@ describe("THE WITCHER - Probando Clase Cliente", ()=> {
   })
   
   test("Prueba getter de del raza", () =>{
-    expect(cliente.raza).toBe("elfo")
+    expect(cliente.raza).toBe("Elfo")
   });
 
   test("Setter de la raza", () => {

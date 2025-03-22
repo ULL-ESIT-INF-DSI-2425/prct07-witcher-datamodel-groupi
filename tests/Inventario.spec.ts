@@ -49,5 +49,49 @@ describe("THE WITCHER - Probando clase Inventario", () => {
     mycoleccion.añadirBien(bien2);
     expect(mycoleccion.MostrarBienes()).toEqual([infoExpected, infoExpected2]);
   });
+  test("Localizar información de un bien", () => {
+    expect(mycoleccion.buscarID(1)).toEqual({
+      "_ID": 1,
+      "_descripcion": "Es una espada de plata",
+      "_material": "Acero de Mahakam",
+      "_nombre": "Espada",
+      "_peso": 12,
+      "_valorEnCoronas": 1300,
+    });
+  });
+  test("Busca todos los ID", () => {
+    mycoleccion.añadirBien(bien2);
+    expect(mycoleccion.getIDs()).toEqual([1,2]);
+  });
+  test("Modificar nombre", () => {
+    const result = mycoleccion.modificarNombre(1, "Espada de cuero");
+    expect(result).toBe(true);
+  });
+  test("Modificar material", () => {
+    const result = mycoleccion.modificarMaterial(1, "cuero endurecido");
+    expect(result).toBe(true);
+  });
+  test("Modificar descripcion", () => {
+    const result = mycoleccion.modificarDescripcion(1, "Es una espada que es de plata y de cuero endurecido");
+    expect(result).toBe(true);
+  });
+  test("Modificar peso", () => {
+    const result = mycoleccion.modificarPeso(1,1);
+    expect(result).toBe(true);
+  });
+  test("Modificar valor en Coronas", () => {
+    const result = mycoleccion.modificarValorCoronas(1, 3);
+    expect(result).toBe(true);
+  });
+  test("Comprobar modificaciones", () => {
+    expect(mycoleccion.buscarID(1)).toEqual({
+      "_ID": 1,
+      "_descripcion": "Es una espada que es de plata y de cuero endurecido",
+      "_material": "cuero endurecido",
+      "_nombre": "Espada de cuero",
+      "_peso": 1,
+      "_valorEnCoronas": 3,
+    });
+  });
 });
 

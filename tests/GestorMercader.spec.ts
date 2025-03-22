@@ -54,5 +54,42 @@ describe("THE WITCHER - Probando clase GestorMercader", () => {
       _ubicacion: "España"
     }]);
   });
+  test("Localizar información de un mercader", () => {
+    mycoleccion.añadirMercader(mercader2);
+    expect(mycoleccion.buscarID(1234)).toEqual({
+      _ID: 1234,
+      _nombre: "YoSoyPlex",
+      _tipo: "Alquimista",
+      _ubicacion: "España"
+    });
+  });
+  test("Localizar información de un mercader cuyo ID no existe", () => {
+    mycoleccion.añadirMercader(mercader2);
+    expect(mycoleccion.buscarID(12345)).toEqual(undefined);
+  });
+  test("Busca todos los ID", () => {
+    mycoleccion.añadirMercader(mercader2);
+    expect(mycoleccion.getIDs()).toEqual([1,1234]);
+  });
+  test("Modificar nombre", () => {
+    const result = mycoleccion.modificarNombre(1, "Ramon");
+    expect(result).toBe(true);
+  });
+  test("Modificar tipo", () => {
+    const result = mycoleccion.modificarTipo(1, "Alquimista");
+    expect(result).toBe(true);
+  });
+  test("Modificar ubicacion", () => {
+    const result = mycoleccion.modificarUbicacion(1, "Velen");
+    expect(result).toBe(true);
+  });
+  test("Comprobar modificaciones", () => {
+    expect(mycoleccion.buscarID(1)).toEqual({
+      _ID: 1,
+      _nombre: "Ramon",
+      _tipo: "Alquimista",
+      _ubicacion: "Velen"
+    });
+  });
 });
 

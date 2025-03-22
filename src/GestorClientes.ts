@@ -75,12 +75,27 @@ export class GestorCliente {
   buscarUbicacion(ubicacion: string): Cliente[] {
     return this.coleccionClientes.filter(cliente => cliente.ubicacion === ubicacion);
   }
+  /**
+   * Método para localizar un ID
+   * @param id - Identificador 
+   * @returns Información del cliente
+   */
   buscarID(id : number) : Cliente | undefined {
     return this.coleccionClientes.find(cliente => cliente.ID === id);
   }
+  /**
+   * Obtener IDs de la colección
+   * @returns IDs de la colección
+   */
   getIDs(): number[] {
     return this._coleccionClientes.map(cliente => cliente.ID);
   }
+  /**
+   * Modificar la raza de un cliente
+   * @param id - identificador del cliente
+   * @param nuevaRaza - nuevo valor de la raza
+   * @returns true si se realizó el cambio y false en caso contrario
+   */
   modificarRaza(id: number, nuevaRaza: razaCliente): boolean {
     const cliente = this.buscarID(id);
     if (!cliente) {
@@ -89,6 +104,12 @@ export class GestorCliente {
     cliente.raza = nuevaRaza;
     return true;
   }
+  /**
+   * Modificar el nombre de un cliente
+   * @param id - identificador del cliente
+   * @param nuevoNombre - nuevo valor del nombre
+   * @returns true si se realizó el cambio y false en caso contrario
+   */
   modificarNombre(id: number, nuevoNombre: string): boolean {
     const cliente = this.buscarID(id);
     if (!cliente) {
@@ -97,6 +118,12 @@ export class GestorCliente {
     cliente.nombre = nuevoNombre;
     return true;
   }
+  /**
+   * Modificar la ubicación del cliente
+   * @param id - identificador del cliente
+   * @param nuevaUbicacion - nuevo valor de la ubicación
+   * @returns true si se realizó el cambio y false en caso contrario
+   */
   modificarUbicacion(id: number, nuevaUbicacion: string): boolean {
     const cliente = this.buscarID(id);
     if (!cliente) {

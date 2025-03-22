@@ -74,12 +74,27 @@ export class GestorMercader {
   buscarUbicacion(ubicacion: string): Mercader[] {
     return this.coleccionMercaderes.filter(mercader => mercader.ubicacion === ubicacion);
   }
+  /**
+   * Método para localizar un ID
+   * @param id - Identificador 
+   * @returns Información del mercader
+   */
   buscarID(id : number) : Mercader | undefined {
     return this.coleccionMercaderes.find(mercader => mercader.ID === id);
   }
+  /**
+   * Obtener IDs de la colección
+   * @returns IDs de la colección
+   */
   getIDs(): number[] {
     return this._coleccionMercaderes.map(mercader => mercader.ID);
   }
+  /**
+   * Modificar tipo del mercader
+   * @param id - Identificador
+   * @param nuevoTipo - nuevo valor del tipo
+   * @returns true si se realizó el cambio y false en caso contrario
+   */
   modificarTipo(id: number, nuevoTipo: tipoMercader): boolean {
     const mercader = this.buscarID(id);
     if (!mercader) {
@@ -88,6 +103,12 @@ export class GestorMercader {
     mercader.tipo = nuevoTipo;
     return true;
   }
+  /**
+   * Modificar el nombre del mercader
+   * @param id - Identificador
+   * @param nuevoNombre - nuevo valor del nombre
+   * @returns true si se realizó el cambio y false en caso contrario
+   */
   modificarNombre(id: number, nuevoNombre: string): boolean {
     const mercader = this.buscarID(id);
     if (!mercader) {
@@ -96,6 +117,12 @@ export class GestorMercader {
     mercader.nombre = nuevoNombre;
     return true;
   }
+  /**
+   * Modificar ubicación del mercader
+   * @param id - Identificador
+   * @param nuevaUbicacion - nuevo valor de la ubicación
+   * @returns true si se realizó el cambio y false en caso contrario
+   */
   modificarUbicacion(id: number, nuevaUbicacion: string): boolean {
     const mercader = this.buscarID(id);
     if (!mercader) {

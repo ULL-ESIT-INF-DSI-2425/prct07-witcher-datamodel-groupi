@@ -75,12 +75,27 @@ export class Inventario  {
       }
     }).map(bien => bien.ID)
   }
+  /**
+   * Método para localizar un ID
+   * @param id - Identificador 
+   * @returns Información del bien
+   */
   buscarID(id : number) : Bien | undefined {
     return this.coleccionBienes.find(bien => bien.ID === id);
   }
+  /**
+   * Obtener IDs de la colección
+   * @returns IDs de la colección
+   */
   getIDs(): number[] {
     return this._coleccionBienes.map(bien => bien.ID);
   }
+  /**
+   * Modificar la descripción del bien
+   * @param id - identificador
+   * @param nuevaDescripcion - nuevo valor de la descripción
+   * @returns true si se realizó el cambio y false en caso contrario
+   */
   modificarDescripcion(id: number, nuevaDescripcion: string): boolean {
     const bien = this.buscarID(id);
     if (!bien) {
@@ -89,6 +104,12 @@ export class Inventario  {
     bien.descripcion = nuevaDescripcion;
     return true;
   }
+  /**
+   * Modificar el nombre del bien
+   * @param id - identificador
+   * @param nuevoNombre - nuevo valor del nombre
+   * @returns true si se realizó el cambio y false en caso contrario
+   */
   modificarNombre(id: number, nuevoNombre: string): boolean {
     const bien = this.buscarID(id);
     if (!bien) {
@@ -97,12 +118,46 @@ export class Inventario  {
     bien.nombre = nuevoNombre;
     return true;
   }
+  /**
+   * Modificar el material del bien
+   * @param id - identificador
+   * @param nuevoMaterial - nuevo valor del material
+   * @returns true si se realizó el cambio y false en caso contrario
+   */
   modificarMaterial(id: number, nuevoMaterial: materialBienes): boolean {
     const bien = this.buscarID(id);
     if (!bien) {
       return false;
     } 
     bien.material = nuevoMaterial;
+    return true;
+  }
+  /**
+   * Modificar el Peso del bien
+   * @param id - identificador
+   * @param nuevoPeso - nuevo valor del peso
+   * @returns true si se realizó el cambio y false en caso contrario
+   */
+  modificarPeso(id: number, nuevoPeso: number): boolean {
+    const bien = this.buscarID(id);
+    if (!bien) {
+      return false;
+    } 
+    bien.peso = nuevoPeso;
+    return true;
+  }
+  /**
+   * Modificar el calor de Coronas del bien
+   * @param id - identificador
+   * @param nuevoValor - nuevo valor de coronas
+   * @returns true si se realizó el cambio y false en caso contrario
+   */
+  modificarValorCoronas(id: number, nuevoValor: number): boolean {
+    const bien = this.buscarID(id);
+    if (!bien) {
+      return false;
+    } 
+    bien.valorEnCoronas = nuevoValor;
     return true;
   }
 }
