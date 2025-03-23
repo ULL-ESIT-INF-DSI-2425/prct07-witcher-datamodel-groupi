@@ -67,21 +67,41 @@ describe("THE WITCHER - Probando clase Inventario", () => {
     const result = mycoleccion.modificarNombre(1, "Espada de cuero");
     expect(result).toBe(true);
   });
+  test("Modificar nombre con ID que no existe", () => {
+    const result = mycoleccion.modificarNombre(1000, "Espada de cuero");
+    expect(result).toBe(false);
+  });
   test("Modificar material", () => {
     const result = mycoleccion.modificarMaterial(1, "cuero endurecido");
     expect(result).toBe(true);
+  });
+  test("Modificar material con ID que no existe", () => {
+    const result = mycoleccion.modificarMaterial(1000, "cuero endurecido");
+    expect(result).toBe(false);
   });
   test("Modificar descripcion", () => {
     const result = mycoleccion.modificarDescripcion(1, "Es una espada que es de plata y de cuero endurecido");
     expect(result).toBe(true);
   });
+  test("Modificar descripcion con ID que no existe", () => {
+    const result = mycoleccion.modificarDescripcion(1000, "Es una espada que es de plata y de cuero endurecido");
+    expect(result).toBe(false);
+  });
   test("Modificar peso", () => {
     const result = mycoleccion.modificarPeso(1,1);
     expect(result).toBe(true);
   });
+  test("Modificar peso con ID que no existe", () => {
+    const result = mycoleccion.modificarPeso(10000,2);
+    expect(result).toBe(false);
+  });
   test("Modificar valor en Coronas", () => {
     const result = mycoleccion.modificarValorCoronas(1, 3);
     expect(result).toBe(true);
+  });
+  test("Modificar valor en Coronas con ID que no existe", () => {
+    const result = mycoleccion.modificarValorCoronas(100000, 3);
+    expect(result).toBe(false);
   });
   test("Comprobar modificaciones", () => {
     expect(mycoleccion.buscarID(1)).toEqual({

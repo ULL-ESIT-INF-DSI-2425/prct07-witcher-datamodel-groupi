@@ -70,13 +70,25 @@ describe("THE WITCHER - Probando clase GestorCliente", () => {
     const result = mycoleccion.modificarNombre(1, "Felipe");
     expect(result).toBe(true);
   });
+  test("Modificar nombre sobre un ID que no existe", () => {
+    const result = mycoleccion.modificarNombre(1000, "Felipe");
+    expect(result).toBe(false);
+  });
   test("Modificar raza", () => {
     const result = mycoleccion.modificarRaza(1, "Elfo");
     expect(result).toBe(true);
   });
+  test("Modificar raza sobre un ID que no existe", () => {
+    const result = mycoleccion.modificarRaza(1000, "Elfo");
+    expect(result).toBe(false);
+  });
   test("Modificar ubicacion", () => {
     const result = mycoleccion.modificarUbicacion(1, "Novigrado");
     expect(result).toBe(true);
+  });
+  test("Modificar ubicacion sobre un ID que no existe", () => {
+    const result = mycoleccion.modificarUbicacion(1000, "Novigrado");
+    expect(result).toBe(false);
   });
   test("Comprobar modificaciones", () => {
     expect(mycoleccion.buscarID(1)).toEqual({

@@ -35,6 +35,10 @@ describe("THE WITCHER - Probando clase Bien", () => {
   });
 
   // SETTERS
+  test("Probar setters del ID del  bien", () => {
+    bien1.ID = 1212;
+    expect(bien1.ID).toBe(1212);
+  });
   test("Probar setters del nombre del  bien", () => {
     bien1.nombre = "Funda Espada de Hierro";
     expect(bien1.nombre).toBe("Funda Espada de Hierro");

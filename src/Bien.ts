@@ -23,11 +23,7 @@ export class Bien {
    * Setter del id de un bien
    */
   set ID(id : number) {
-    if (id > 0) {
-      this._ID = id;
-    } else {
-      console.error("ID debe ser un valor positivo.");
-    }
+    this._ID = id;
   }
   /**
    * Getter para obtener el nombre del bien

@@ -75,13 +75,25 @@ describe("THE WITCHER - Probando clase GestorMercader", () => {
     const result = mycoleccion.modificarNombre(1, "Ramon");
     expect(result).toBe(true);
   });
+  test("Modificar nombre con ID que no existe", () => {
+    const result = mycoleccion.modificarNombre(1000, "Ramon");
+    expect(result).toBe(false);
+  });
   test("Modificar tipo", () => {
     const result = mycoleccion.modificarTipo(1, "Alquimista");
     expect(result).toBe(true);
   });
+  test("Modificar tipo con ID que no existe", () => {
+    const result = mycoleccion.modificarTipo(1000, "Alquimista");
+    expect(result).toBe(false);
+  });
   test("Modificar ubicacion", () => {
     const result = mycoleccion.modificarUbicacion(1, "Velen");
     expect(result).toBe(true);
+  });
+  test("Modificar ubicacion con ID que no existe", () => {
+    const result = mycoleccion.modificarUbicacion(1000, "Velen");
+    expect(result).toBe(false);
   });
   test("Comprobar modificaciones", () => {
     expect(mycoleccion.buscarID(1)).toEqual({
