@@ -29,5 +29,10 @@ export default [
     "dist/*",
     "docs/*"
   ]    
+  },
+  {
+    rules: {
+      "no-case-declarations": "off"
+    }
   }
 ];
