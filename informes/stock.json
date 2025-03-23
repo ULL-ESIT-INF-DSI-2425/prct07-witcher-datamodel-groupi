@@ -1,0 +1,24 @@
+{
+  "bienes": [
+    "Bien: Espada de Plata de Kaer Morhen, con ID 1\nDescripcion: Forjada en Kaer Morhen para enfrentar monstruos\nMaterial: Acero de Mahakam\nPeso: 3.5\nValor: 150 coronas",
+    "Bien: Elixir de Golondrina, con ID 2\nDescripcion: Acelera la regeneración de heridas\nMaterial: mutágenos de bestias antiguas\nPeso: 0.2\nValor: 50 coronas",
+    "Bien: Ballesta de Caza, con ID 3\nDescripcion: Ideal para atacar desde la distancia\nMaterial: cuero endurecido\nPeso: 2\nValor: 90 coronas",
+    "Bien: Armadura de Grifo, con ID 4\nDescripcion: Ofrece protección equilibrada y agilidad\nMaterial: cuero endurecido\nPeso: 8\nValor: 300 coronas",
+    "Bien: Espada de Acero de Novigrado, con ID 5\nDescripcion: Usada por la guardia de la ciudad\nMaterial: Acero de Mahakam\nPeso: 3\nValor: 100 coronas",
+    "Bien: Pergamino de Señal Igni, con ID 6\nDescripcion: Contiene secretos para mejorar la señal Igni\nMaterial: esencia mágica\nPeso: 0.1\nValor: 75 coronas",
+    "Bien: Daga de Caza de Skellige, con ID 7\nDescripcion: Pequeña pero letal\nMaterial: Acero de Mahakam\nPeso: 1\nValor: 60 coronas",
+    "Bien: Botas de Brujo, con ID 8\nDescripcion: Aumentan la movilidad del portador\nMaterial: cuero endurecido\nPeso: 2.5\nValor: 120 coronas",
+    "Bien: Amuleto de Meditación, con ID 9\nDescripcion: Facilita la concentración mágica\nMaterial: esencia mágica\nPeso: 0.3\nValor: 40 coronas",
+    "Bien: Libro de Bestias, con ID 10\nDescripcion: Contiene información sobre monstruos comunes\nMaterial: cuero endurecido\nPeso: 1.2\nValor: 65 coronas",
+    "Bien: Guantes de Grifo, con ID 11\nDescripcion: Protegen sin perder agilidad\nMaterial: cuero endurecido\nPeso: 1.8\nValor: 85 coronas",
+    "Bien: Poción del Gato, con ID 12\nDescripcion: Permite ver en la oscuridad\nMaterial: mutágenos de bestias antiguas\nPeso: 0.1\nValor: 40 coronas",
+    "Bien: Mutágeno Verde, con ID 13\nDescripcion: Mejora resistencia física\nMaterial: mutágenos de bestias antiguas\nPeso: 0.2\nValor: 55 coronas",
+    "Bien: Espada Rúnica, con ID 14\nDescripcion: Incrustada con runas élficas\nMaterial: Acero de Mahakam\nPeso: 3.2\nValor: 200 coronas",
+    "Bien: Capucha de Caza, con ID 15\nDescripcion: Oculta y protege del frío\nMaterial: cuero endurecido\nPeso: 0.7\nValor: 30 coronas",
+    "Bien: Cota de Malla, con ID 16\nDescripcion: Usada por mercenarios experimentados\nMaterial: Acero de Mahakam\nPeso: 5\nValor: 180 coronas",
+    "Bien: Talismán Antimagia, con ID 17\nDescripcion: Protege contra hechizos\nMaterial: esencia mágica\nPeso: 0.5\nValor: 90 coronas",
+    "Bien: Piedra de Afilar Rúnica, con ID 18\nDescripcion: Mejora armas temporalmente\nMaterial: esencia mágica\nPeso: 1\nValor: 50 coronas",
+    "Bien: Poción de Maribor, con ID 19\nDescripcion: Recupera energía al instante\nMaterial: mutágenos de bestias antiguas\nPeso: 0.2\nValor: 45 coronas",
+    "Bien: Mapa de Tesoros, con ID 20\nDescripcion: Revela botines ocultos\nMaterial: esencia mágica\nPeso: 0.1\nValor: 70 coronas"
+  ]
+}

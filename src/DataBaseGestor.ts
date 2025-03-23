@@ -1,5 +1,5 @@
-import { Low } from 'lowdb';
-import { JSONFile } from 'lowdb/node';
+import { LowSync } from 'lowdb';
+import { JSONFileSync } from 'lowdb/node';
 import { Cliente } from "./Cliente.js";
 import { Mercader } from "./Mercader.js";
 import { Bien } from "./Bien.js";
@@ -7,134 +7,134 @@ import { NuevaTransaccion } from "./Transaccion.js";
 import { GestorCliente } from "./GestorClientes.js";
 import { GestorMercader } from "./GestorMercaderes.js";
 import { Inventario } from "./Inventario.js";
-import * as fs from 'fs';
-import path from 'path';
+
+// Interfaces de cada base de datos de los elementos del juego
+interface ClientesDB { clientes: Cliente[]; }
+interface MercaderesDB { mercaderes: Mercader[]; }
+interface InventarioDB { inventario: Bien[]; }
+interface TransaccionesDB { transacciones: NuevaTransaccion[]; }
 
 /**
- * Interfaz de la estructura de la base de datos de nuestro programa
- * Se usa para formatear el Low
+ * Interfaz para poder hacer informes de stock con LowSync
  */
-interface DBStructure {
-  clientes: Cliente[];
-  mercaderes: Mercader[];
-  inventario: Bien[];
-  transacciones: NuevaTransaccion[];
-};
+interface InformeStockDB {
+  bienes: string[]; 
+}
 
 /**
- * Inicializacion por defecto de la base de datos
+ * Interfaz para poder hacer informes de bien mas vendido con LowSync
  */
-const defaultData : DBStructure = {
-  clientes: [],
-  mercaderes: [],
-  inventario: [],
-  transacciones: [],
-};
+interface InformeMasVendidoDB {
+  id: number;
+  cantidad: number;
+}
+
+/**
+ * Interfaz para hacer informe de gastos con LowSync
+ */
+interface IngresosGastosDB { 
+  ingresos: number; 
+  gastos: number; 
+}
+
+/**
+ * Interfaz para hacer informes de historial de transacciones con LowSync
+ */
+interface HistorialTransaccionesDB { 
+  transacciones: NuevaTransaccion[]; 
+}
 
 export class GestorDB {
-  private _db: Low<DBStructure>;
+  private _dbClientes: LowSync<ClientesDB>;
+  private _dbMercaderes: LowSync<MercaderesDB>;
+  private _dbInventario: LowSync<InventarioDB>;
+  private _dbTransacciones: LowSync<TransaccionesDB>;
   private _gestorClientes: GestorCliente;
   private _gestorMercaderes: GestorMercader;
   private _inventario: Inventario;
   private _transacciones: NuevaTransaccion[];
 
   /**
-   * Constructor de la clase GestorDB
+   * Se trata del constructor de la base de datos que lee todos los datos de los ficheros de inicializacion
+   * que guardamos en el directorio /db
    */
   constructor() {
-    this._db = new Low(new JSONFile<DBStructure>('./db/database.json'), defaultData); // inicializo vacio, no borrar database.json
-    this._gestorClientes = new GestorCliente([]);
-    this._gestorMercaderes = new GestorMercader([]);
-    this._inventario = new Inventario([]);
-    this._transacciones = [];
+    this._dbClientes = new LowSync(new JSONFileSync<ClientesDB>('./db/iniClientes.json'), { clientes: [] });
+    this._dbClientes.read();
+    this._gestorClientes = new GestorCliente(this._dbClientes.data.clientes);
+    this._dbMercaderes = new LowSync(new JSONFileSync<MercaderesDB>('./db/iniMercaderes.json'), { mercaderes: [] });
+    this._dbMercaderes.read();
+    this._gestorMercaderes = new GestorMercader(this._dbMercaderes.data.mercaderes);
+    this._dbInventario = new LowSync(new JSONFileSync<InventarioDB>('./db/iniInventario.json'), { inventario: [] });
+    this._dbInventario.read();
+    this._inventario = new Inventario(this._dbInventario.data.inventario);
+    this._dbTransacciones = new LowSync(new JSONFileSync<TransaccionesDB>('./db/iniTransacciones.json'), { transacciones: [] });
+    this._dbTransacciones.read();
+    this._transacciones = this._dbTransacciones.data.transacciones;
   }
 
   /**
    * Getter del gestor de clientes
    */
-  get gestorCliente() : GestorCliente {
-    return this._gestorClientes;
+  get gestorCliente(): GestorCliente { 
+    return this._gestorClientes; 
   }
-
   /**
    * Getter del gestor de Mercaderes
    */
-  get gestorMercaderes() : GestorMercader {
-    return this._gestorMercaderes;
+  get gestorMercaderes(): GestorMercader { 
+    return this._gestorMercaderes; 
   }
-
   /**
    * Getter del inventario
    */
-  get inventario() : Inventario {
-    return this._inventario;
+  get inventario(): Inventario { 
+    return this._inventario; 
   }
-
   /**
-   * Getter de la base de datos
+   * Getter de las transacciones
    */
-  get db() : Low<DBStructure> {
-    return this._db;
+  get transacciones(): NuevaTransaccion[] { 
+    return this._transacciones; 
   }
 
   /**
-   * Getter de la lista de transacciones
-   */
-  get transacciones() : NuevaTransaccion[] {
-    return this._transacciones;
-  }
-
-  /**
-   * Metodo que permite inicializar la base de datos del juego a partir de ficheros 
-   * json en el directorio /db
+   * Metodo que permite inicializar la base de datos con un read de los ficheros
    */
   iniDB(): void {
-    const dbDirectory = './db/';
-    const files = fs.readdirSync(dbDirectory);
-    files.forEach(file => {
-      if (file.endsWith('.json')) {
-        const filePath = path.join(dbDirectory, file);
-        const fileData = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
-        if (file === 'iniClientes.json') {
-          this._gestorClientes = new GestorCliente(fileData);
-        } else if (file === 'iniMercaderes.json') {
-          this._gestorMercaderes = new GestorMercader(fileData);
-        } else if (file === 'iniInventario.json') {
-          this._inventario = new Inventario(fileData);
-        } else if (file === 'iniTransacciones.json') {
-          this._transacciones = fileData;
-        }
-      }
-    });
+    this._dbClientes.read();
+    this._dbMercaderes.read();
+    this._dbInventario.read();
+    this._dbTransacciones.read();
   }
 
   /**
-   * Metodo que permite hacer el guardado de los cambios realizados durante la partida
-   * Se ejecuta justo al terminar el main y permite guardar todo en los respectivos 
-   * ficheros json
+   * Metodo que permite guardar todos los cambios en la base de datos
    */
   outDB(): void {
-    const dbDirectory = './db/';
-    fs.writeFileSync(path.join(dbDirectory, 'iniClientes.json'), JSON.stringify(this._gestorClientes.coleccionClientes, null, 2));
-    fs.writeFileSync(path.join(dbDirectory, 'iniMercaderes.json'), JSON.stringify(this._gestorMercaderes.coleccionMercaderes, null, 2));
-    fs.writeFileSync(path.join(dbDirectory, 'iniInventario.json'), JSON.stringify(this._inventario.coleccionBienes, null, 2));
-    fs.writeFileSync(path.join(dbDirectory, 'iniTransacciones.json'), JSON.stringify(this._transacciones, null, 2));
-    console.log("Archivos actualizados con éxito.");
+    this._dbClientes.data.clientes = this._gestorClientes.coleccionClientes;
+    this._dbMercaderes.data.mercaderes = this._gestorMercaderes.coleccionMercaderes;
+    this._dbInventario.data.inventario = this._inventario.coleccionBienes;
+    this._dbTransacciones.data.transacciones = this._transacciones;
+
+    this._dbClientes.write();
+    this._dbMercaderes.write();
+    this._dbInventario.write();
+    this._dbTransacciones.write();
   }
 
   /**
-   * Metodo que permite generar un informe sobre el stock disponible en el inventario
-   * en esa fecha determinada
+   * Método para generar informe de stock
    */
   generarInformeStock(): void {
-    const informe = this._inventario.MostrarBienes();
-    fs.writeFileSync(`./informes/stock_v${Date.now()}.json`, JSON.stringify(informe, null, 2));
-  }  
+    const data = this._inventario.MostrarBienes(); 
+    const dbStock = new LowSync<InformeStockDB>(new JSONFileSync('./informes/stock.json'), { bienes: [] });
+    dbStock.data = { bienes: data };
+    dbStock.write();
+  }
 
   /**
-   * Metodo para generar un informe del bien más vendido del inventario primero hacemos un conteo
-   * por los bienes que hay si existe sumamos 1 a la cantidad y si no lo agregamos a la tupla
-   * al final buscarmos el mas vendido
+   * Método para generar el informe del bien más vendido
    */
   generarInformeMasVendido(): void {
     const conteo: [number, number][] = [];
@@ -143,9 +143,9 @@ export class GestorDB {
         transaccion.bienes.forEach(([id, cantidad]) => {
           const index = conteo.findIndex(([existingId]) => existingId === id);
           if (index !== -1) {
-            conteo[index][1] += cantidad; 
+            conteo[index][1] += cantidad;
           } else {
-            conteo.push([id, cantidad]); 
+            conteo.push([id, cantidad]);
           }
         });
       }
@@ -153,11 +153,14 @@ export class GestorDB {
     const informe = conteo
       .map(([id, cantidad]) => ({ id, cantidad }))
       .sort((a, b) => b.cantidad - a.cantidad);
-    fs.writeFileSync(`./informes/mas_vendido_v${Date.now()}.json`, JSON.stringify(informe, null, 2));
+
+    const dbMasVendido = new LowSync<InformeMasVendidoDB[]>(new JSONFileSync('./informes/mas_vendido.json'), []);
+    dbMasVendido.data = informe;
+    dbMasVendido.write();
   }
-  
+
   /**
-   * Método que calcula el total de ingresos por ventas y gastos en compras
+   * Método para generar el informe de ingresos y gastos
    */
   generarInformeIngresosGastos(): void {
     let ingresos = 0;
@@ -170,19 +173,21 @@ export class GestorDB {
       }
     });
     const informe = { ingresos, gastos };
-    fs.writeFileSync(`./informes/ingresos_gastos_v${Date.now()}.json`, JSON.stringify(informe, null, 2));
+    const dbIngresosGastos = new LowSync<IngresosGastosDB>(new JSONFileSync('./informes/ingresos_gastos.json'), { ingresos: 0, gastos: 0 });
+    dbIngresosGastos.data = informe;
+    dbIngresosGastos.write();
   }
 
   /**
-   * Metodo que permite generar un informe del Historial de transacciones de un cliente o mercader
-   * @param id - id del cliente o mercader
-   * @param tipo - tipo del personaje (cliente o mercader)
+   * Método para generar el historial de transacciones de un cliente o mercader
    */
   generarHistorialTransacciones(id: number, tipo: 'cliente' | 'mercader'): void {
     const historial = this._transacciones.filter(transaccion => 
       (tipo === 'cliente' && transaccion.idCliente === id) ||
       (tipo === 'mercader' && transaccion.idMercader === id)
     );
-    fs.writeFileSync(`./informes/historial_${tipo}_${id}_v${Date.now()}.json`, JSON.stringify(historial, null, 2));
+    const dbHistorial = new LowSync<HistorialTransaccionesDB>(new JSONFileSync(`./informes/historial_${tipo}_${id}.json`), { transacciones: [] });
+    dbHistorial.data = { transacciones: historial };
+    dbHistorial.write();
   }
 }

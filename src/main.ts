@@ -5,6 +5,11 @@ import { Transaccion, NuevaTransaccion } from "./Transaccion.js";
 import { Inventario } from "./Inventario.js";
 import { GestorDB } from './DataBaseGestor.js';
 import inquirer from "inquirer";
+import fs from 'fs';
+
+if (!fs.existsSync('./informes')) {
+  fs.mkdirSync('./informes', { recursive: true });
+}
 
 /**
  * Funcion de introducción al juego The Witcher
@@ -90,7 +95,7 @@ async function gestionarClientes() {
         {type:'input', name:'id_cl', message:'Id del cliente'},
         { type: 'input', name: 'nombre', message: 'Nombre del cliente:' },
         { type: 'input', name: 'ubicacion', message: 'Ubicación del cliente:' },
-        { type: 'input', razaCliente: 'raza', message: 'Raza del cliente:' }
+        { type: 'input', name: 'raza', message: 'Raza del cliente:' }
       ]);
       let raza : razaCliente = añadir.raza;
       if(Number(añadir.id_cl) in gestorDB.gestorCliente.getIDs()){
@@ -438,7 +443,6 @@ async function hacerTransaccion() {
       }
       break;
     case 'Devolver':
-      // Seleccionar el bien a devolver
       const { idBienDevolver } = await inquirer.prompt([
         {
           type: 'input',
@@ -449,7 +453,7 @@ async function hacerTransaccion() {
       ]);
       const bienDevolver = gestorDB.inventario.buscarID(Number(idBienDevolver));
       if (bienDevolver) {
-        gestorDB.inventario.añadirBien(bienDevolver); // Suponemos que la devolución es igual a una compra
+        gestorDB.inventario.añadirBien(bienDevolver); 
         console.log(`Bien '${bienDevolver.nombre}' devuelto correctamente.`);
       } else {
         console.log('Bien no encontrado en la colección.');

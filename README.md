@@ -17,3 +17,12 @@
 
 # Informe de la práctica
 En este informe se detallarán una serie de problemas que hemos tenido a la hora de resolver la práctica.
+
+### LOWDB
+Hemos encontrado numerosos problemas a la hora de poder leer de ficheros para instanciar los gestores a partir de un fichero json. Es por ello que hemos intentado implementarlo a todo costa. Dichos intentos se ven reflejado en los ficheros DataBaseGestor.ts y main.ts en los cuales no hemos podido encontrar los errores de cargar de la base de datos.
+
+Por otro lado, no queríamos dejar de presentar un trabajo bien hecho donde se demuestre el correcto funcionamiento del inquirer junto a la estructura del juego The Witcher. Por tanto, hemos aportado un index.ts donde la "base de datos" se carga a mano, junto al fichero tools.ts donde hemos implementado funciones con lowdb para generar los ficheros que se piden en al práctica.
+
+En resumen:
+main.ts + DataBaseGestor -> compila pero da errores de ejecución pero es una aproximación a nuestra base de datos.
+index.ts + tools.ts -> compila y ejecuta pero la base de datos es hecha a mano.

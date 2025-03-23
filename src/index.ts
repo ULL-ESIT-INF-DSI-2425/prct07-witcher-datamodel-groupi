@@ -6,6 +6,7 @@ import { Inventario } from "./Inventario.js";
 import inquirer from "inquirer";
 import { GestorCliente } from "./GestorClientes.js";
 import { GestorMercader } from "./GestorMercaderes.js";
+import { generarHistorialTransacciones, generarInformeIngresosGastos, generarInformeMasVendido, generarInformeStock } from "./tools.js"
 
 const inventario = new Inventario([
   new Bien(1, "Espada de Plata de Kaer Morhen", "Forjada en Kaer Morhen para enfrentar monstruos", "Acero de Mahakam", 3.5, 150),
@@ -81,6 +82,7 @@ async function main() {
           'Gestionar mercaderes',
           'Gestionar inventario',
           'Hacer una transacción',
+          'Generar informes',
           'Salir'
         ]
       }
@@ -98,6 +100,9 @@ async function main() {
         break;
       case 'Hacer una transacción':
         await hacerTransaccion();
+        break;
+      case 'Generar informes' :
+        await generarInforme();
         break;
       case 'Salir':
         salir = true;
@@ -122,6 +127,7 @@ async function gestionarClientes() {
       'Buscar por nombre',
       'Buscar por ubicación',
       'Buscar por raza',
+      'Ordenar por ids',
       'Volver'
     ]
   });
@@ -173,6 +179,11 @@ async function gestionarClientes() {
       console.log(gestorCliente.buscarRaza(raza as razaCliente));
       break;
     }
+    case 'Ordenar por ids': {
+      gestorCliente.ordenarID();
+      console.log("Se ha ordenado correctamente la lista de clientes por su id.\n");
+      break;
+    }
     case 'Volver':
       return;
   }
@@ -194,6 +205,7 @@ async function gestionarMercaderes() {
       'Buscar por nombre',
       'Buscar por ubicación',
       'Buscar por tipo',
+      'Ordenar por ids',
       'Volver'
     ]
   });
@@ -245,6 +257,11 @@ async function gestionarMercaderes() {
       console.log(gestorMercader.buscarTipo(tipo as tipoMercader));
       break;
     }
+    case 'Ordenar por ids' : {
+      gestorMercader.ordenarID();
+      console.log("Se ha ordenado correctamente la lista de mercaderes según su id.\n");
+      break;
+    }
     case 'Volver':
       return;
   }
@@ -265,6 +282,8 @@ async function gestionarInventario() {
       'Modificar Bien',
       'Consultar Bienes',
       'Consultar un Bien',
+      'Ordenar por nombre',
+      'Ordenar por valor',
       'Volver'
     ]
   });
@@ -355,6 +374,16 @@ async function gestionarInventario() {
       console.log("Resultados:", resultado);
       break;
     }
+    case 'Ordenar por nombre' : {
+      inventario.ordenarPorNombre();
+      console.log("El inventario se ha ordenado por el nombre de los bienes.\n");
+      break;
+    }
+    case 'Ordenar por valor' : {
+      inventario.ordenarPorValorCoronas();
+      console.log("El inventario se ha ordenado por el valor de los bienes.\n");
+      break;
+    }
     case 'Volver':
       return;
   }
@@ -412,6 +441,56 @@ async function hacerTransaccion() {
       console.log('Devolución realizada con éxito.');
       break;
     }
+    case 'Volver':
+      return;
+  }
+}
+
+/**
+ * Función que permite gestionar las opciones de informe que 
+ * nuestro usuario quiere realizar a lo largo del juego
+ */
+async function generarInforme() {
+  const { tipoInforme } = await inquirer.prompt([
+    {
+      type: 'list',
+      name: 'tipoInforme',
+      message: 'Seleccione el tipo de informe:',
+      choices: [
+        'Stock de bienes',
+        'Bienes más vendidos',
+        'Ingresos y gastos',
+        'Historial de transacciones',
+        'Volver'
+      ]
+    }
+  ]);
+  
+  switch (tipoInforme) {
+    case 'Stock de bienes':
+      generarInformeStock(inventario);
+      console.log('Informe de stock generado.');
+      break;
+    case 'Bienes más vendidos':
+      generarInformeMasVendido(transacciones);
+      console.log('Informe de bienes más vendidos generado.');
+      break;
+    case 'Ingresos y gastos':
+      generarInformeIngresosGastos(transacciones);
+      console.log('Informe de ingresos y gastos generado.');
+      break;
+    case 'Historial de transacciones':
+      const respuestas = await inquirer.prompt([
+        { type: 'input', name: 'id', message: 'Id del personaje' },
+        { type: 'input', name: 'tipo', message: 'Tipo del personaje (cliente o mercader)' }
+      ]);
+      let id_hist = Number(respuestas.id);
+      if (respuestas.tipo !== "cliente" && respuestas.tipo !== "mercader") {
+        console.log("Introduzca un tipo de personaje válido. Cliente o Mercader.\n");
+      }
+      generarHistorialTransacciones(transacciones, id_hist, respuestas.tipo);
+      console.log('Informe de historial de transacciones generado.');
+      break;
     case 'Volver':
       return;
   }

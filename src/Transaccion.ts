@@ -23,6 +23,9 @@ export class Transaccion {
   constructor() {
     this._transacciones = [];
   }
+  get transacciones() : NuevaTransaccion[] {
+    return this._transacciones;
+  }
   /**
    * Método para realizar una transacción de tipo Venta
    * @param idCliente - identificador del cliente
