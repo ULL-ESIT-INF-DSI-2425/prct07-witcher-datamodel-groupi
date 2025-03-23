@@ -1,0 +1,34 @@
+[
+  {
+    "fecha": "2025-03-23T10:00:00.000Z",
+    "tipo": "venta",
+    "bienes": [[1, 3], [2, 5]],
+    "totalCoronas": 150,
+    "idCliente": 1,
+    "idMercader": 3
+  },
+  {
+    "fecha": "2025-03-23T11:30:00.000Z",
+    "tipo": "compra",
+    "bienes": [[3, 2]],
+    "totalCoronas": 50,
+    "idCliente": 2,
+    "idMercader": 1
+  },
+  {
+    "fecha": "2025-03-23T14:00:00.000Z",
+    "tipo": "venta",
+    "bienes": [[1, 1], [3, 2]],
+    "totalCoronas": 120,
+    "idCliente": 3,
+    "idMercader": 2
+  },
+  {
+    "fecha": "2025-03-23T15:00:00.000Z",
+    "tipo": "devolucion",
+    "bienes": [[2, 1]],
+    "totalCoronas": 25,
+    "idCliente": 1,
+    "idMercader": 3
+  }
+]

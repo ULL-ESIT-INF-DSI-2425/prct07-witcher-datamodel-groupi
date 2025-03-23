@@ -1,0 +1,30 @@
+[
+  {
+    "id": 1,
+    "nombre": "Espada de acero",
+    "descripcion": "Una espada forjada con acero de alta calidad.",
+    "cantidad": 10,
+    "material": "acero"
+  },
+  {
+    "id": 2,
+    "nombre": "Poción de curación",
+    "descripcion": "Una poción que regenera la salud.",
+    "cantidad": 50,
+    "material": "hierbas"
+  },
+  {
+    "id": 3,
+    "nombre": "Escudo de hierro",
+    "descripcion": "Escudo resistente fabricado de hierro.",
+    "cantidad": 5,
+    "material": "hierro"
+  },
+  {
+    "id": 4,
+    "nombre": "Libro de hechizos",
+    "descripcion": "Un antiguo libro que contiene poderosos hechizos.",
+    "cantidad": 2,
+    "material": "papel"
+  }
+]

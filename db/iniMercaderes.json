@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "nombre": "Gorim el Herrero",
+    "ubicacion": "Forja de la Montaña",
+    "tipo": "Herrero"
+  },
+  {
+    "id": 2,
+    "nombre": "Elena la Alquimista",
+    "ubicacion": "Tienda de Pociones en la ciudad",
+    "tipo": "Alquimista"
+  },
+  {
+    "id": 3,
+    "nombre": "Bartos el Mercader",
+    "ubicacion": "Plaza del Mercado",
+    "tipo": "Mercader general"
+  },
+  {
+    "id": 4,
+    "nombre": "Ishar el Herrero",
+    "ubicacion": "Tienda de Armas en el pueblo",
+    "tipo": "Herrero"
+  }
+]

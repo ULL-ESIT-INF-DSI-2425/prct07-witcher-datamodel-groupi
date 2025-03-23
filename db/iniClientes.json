@@ -1,0 +1,26 @@
+[
+  {
+    "_ID": 1,
+    "_nombre": "Geralt de Rivia",
+    "_ubicacion": "Kaer Morhen",
+    "_raza": "Humano"
+  },
+  {
+    "_ID": 2,
+    "_nombre": "Triss Merigold",
+    "_ubicacion": "Novigrado",
+    "_raza": "Hechicero"
+  },
+  {
+    "_ID": 3,
+    "_nombre": "Zoltan Chivay",
+    "_ubicacion": "Oxenfurt",
+    "_raza": "Enano"
+  },
+  {
+    "_ID": 4,
+    "_nombre": "Iorveth",
+    "_ubicacion": "Bosque de Vergen",
+    "_raza": "Elfo"
+  }
+]
