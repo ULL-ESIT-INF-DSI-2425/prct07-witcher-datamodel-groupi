@@ -1,4 +1,4 @@
-import { Bien } from "./Bien.ts";
+import { Bien, materialBienes } from "./Bien.ts";
 import { Cliente, razaCliente } from "./Cliente.ts";
 import { Mercader, tipoMercader } from "./Mercader.ts";
 import { Transaccion, NuevaTransaccion } from "./Transaccion.ts";
@@ -86,23 +86,26 @@ async function gestionarClientes() {
   ]);
   switch (accion) {
     case 'Añadir Cliente':
-      let id_counter : number = 0;
-      const repsuestas = await inquirer.prompt([
+      const añadir = await inquirer.prompt([
+        {type:'input', name:'id_cl', message:'Id del cliente'},
         { type: 'input', name: 'nombre', message: 'Nombre del cliente:' },
         { type: 'input', name: 'ubicacion', message: 'Ubicación del cliente:' },
         { type: 'input', razaCliente: 'raza', message: 'Raza del cliente:' }
       ]);
-      let raza : razaCliente = repsuestas.raza;
-      const nuevoCliente = new Cliente(id_counter,repsuestas.nombre, repsuestas.ubicacion, raza)
+      let raza : razaCliente = añadir.raza;
+      if(Number(añadir.id_cl) in gestorDB.gestorCliente.getIDs()){
+        console.log("Ese id ya está ocupado.\n");
+        break;
+      }
+      const nuevoCliente = new Cliente(Number(añadir.id), añadir.nombre, añadir.ubicacion, raza)
       gestorDB.gestorCliente.añadirCliente(nuevoCliente);
       console.log('Cliente añadido con éxito.');
-      await gestorDB.outDB();
     break;
     case 'Eliminar Cliente':
       const respuestas = await inquirer.prompt([
         {type: 'input', name: 'id', message: 'ID del cliente a eliminar'}
       ]);
-      const eliminar = gestorDB.gestorCliente.buscarID(repsuestas.id);
+      const eliminar = gestorDB.gestorCliente.buscarID(respuestas.id);
       if (eliminar !== undefined) {
         gestorDB.gestorCliente.eliminarCliente(eliminar);
       } else {
@@ -110,8 +113,39 @@ async function gestionarClientes() {
       }
     break;
     case 'Modificar Cliente':
-      // FALTA HACER ESTOS METODOS
-      console.log('Funcionalidad aún no implementada.');
+      const modificarID = await inquirer.prompt([
+        { type: 'input', name: 'id', message: 'ID del cliente a modificar:' }
+      ]);
+      const idCliente = Number(modificarID.id);
+      if (!gestorDB.gestorCliente.buscarID(idCliente)) {
+        console.log("No existe cliente con ese ID.\n");
+        break;
+      }
+      const { campo } = await inquirer.prompt([
+        {
+          type: 'list',
+          name: 'campo',
+          message: '¿Qué desea modificar?',
+          choices: ['Nombre', 'Ubicación', 'Raza', 'Cancelar']
+        }
+      ]);
+      if (campo === 'Cancelar') break;
+      const nuevoValor = await inquirer.prompt([
+        { type: 'input', name: 'valor', message: `Nuevo ${campo.toLowerCase()} del cliente:` }
+      ]);
+      let exito = false;
+      if (campo === 'Nombre') exito = gestorDB.gestorCliente.modificarNombre(idCliente, nuevoValor.valor);
+      else if (campo === 'Ubicación') exito = gestorDB.gestorCliente.modificarUbicacion(idCliente, nuevoValor.valor);
+      else if (campo === 'Raza') {
+        let nueva_raza : razaCliente = nuevoValor.valor;
+        exito = gestorDB.gestorCliente.modificarRaza(idCliente, nueva_raza);
+      }
+      if (exito) {
+        console.log('Cliente modificado con éxito.');
+        await gestorDB.outDB();
+      } else {
+        console.log('No se pudo modificar el cliente.');
+      }
     break;
     case 'Consultar Clientes':
       console.log(gestorDB.gestorCliente.coleccionClientes);
@@ -140,18 +174,229 @@ async function gestionarClientes() {
   }
 }
 
+/**
+ * Funcion para poder manejar las opciones del videojuego cuando el usuario
+ * quiere gestionar a los mercaderes de la base de datos
+ */
 async function gestionarMercaderes() {
-  console.log('Funcionalidad aún no implementada.');
+  const { accion } = await inquirer.prompt([
+    {
+      type: 'list',
+      name: 'accion',
+      message: 'Seleccione una opción para mercaderes:',
+      choices: [
+        'Añadir Mercader',
+        'Eliminar Mercader',
+        'Modificar Mercader',
+        'Consultar Mercaderes',
+        'Buscar por nombre',
+        'Buscar por ubicación',
+        'Buscar por tipo',
+        'Volver'
+      ]
+    }
+  ]);
+  switch (accion) {
+    case 'Añadir Mercader':
+      const añadir_m = await inquirer.prompt([
+        {type:'input', name:'id_m', message:'Id del mercader'},
+        { type: 'input', name: 'nombre', message: 'Nombre del mercader:' },
+        { type: 'input', name: 'ubicacion', message: 'Ubicación del mercader:' },
+        { type: 'input', name: 'tipo', message: 'Tipo del mercader:' }
+      ]);
+      let tipo_m : tipoMercader = añadir_m.tipo;
+      if(Number(añadir_m.id_m) in gestorDB.gestorMercaderes.getIDs()){
+        console.log("Ese id ya está ocupado.\n");
+        break;
+      }
+      const nuevoMercader = new Mercader(Number(añadir_m.id), añadir_m.nombre, añadir_m.ubicacion, tipo_m)
+      gestorDB.gestorMercaderes.añadirMercader(nuevoMercader);
+      console.log('Mercader añadido con éxito.');
+    break;
+    case 'Eliminar Mercader':
+      const elim_m = await inquirer.prompt([
+        {type: 'input', name: 'id', message: 'ID del mercader a eliminar'}
+      ]);
+      const eliminar = gestorDB.gestorMercaderes.buscarID(elim_m.id);
+      if (eliminar !== undefined) {
+        gestorDB.gestorMercaderes.eliminarMercader(eliminar);
+      } else {
+        console.log("No existe mercader con ese ID.\n");
+      }
+    break;
+    case 'Modificar Mercader':
+      const modificarM = await inquirer.prompt([
+        { type: 'input', name: 'id', message: 'ID del mercader a modificar:' }
+      ]);
+      const idMercader = Number(modificarM.id);
+      if (!gestorDB.gestorMercaderes.buscarID(idMercader)) {
+        console.log("No existe Mercader con ese ID.\n");
+        break;
+      }
+      const { campo } = await inquirer.prompt([
+        {
+          type: 'list',
+          name: 'campo',
+          message: '¿Qué desea modificar?',
+          choices: ['Nombre', 'Ubicación', 'Tipo', 'Cancelar']
+        }
+      ]);
+      if (campo === 'Cancelar') break;
+      const nuevoValor = await inquirer.prompt([
+        { type: 'input', name: 'valor', message: `Nuevo ${campo.toLowerCase()} del mercader:` }
+      ]);
+      let exito = false;
+      if (campo === 'Nombre') exito = gestorDB.gestorMercaderes.modificarNombre(idMercader, nuevoValor.valor);
+      else if (campo === 'Ubicación') exito = gestorDB.gestorMercaderes.modificarUbicacion(idMercader, nuevoValor.valor);
+      else if (campo === 'Tipo') {
+        let nuevo_tipo : tipoMercader = nuevoValor.valor;
+        exito = gestorDB.gestorMercaderes.modificarTipo(idMercader, nuevo_tipo);
+      }
+      if (exito) {
+        console.log('Mercader modificado con éxito.');
+        await gestorDB.outDB();
+      } else {
+        console.log('No se pudo modificar el mercader.');
+      }
+    break;
+    case 'Consultar Mercaderes':
+      console.log(gestorDB.gestorMercaderes.coleccionMercaderes);
+    break;
+    case 'Buscar por nombre':
+      const buscar_nombre_m = await inquirer.prompt([
+        {type: 'input', name: 'nombre', message:'Nombre del mercader a buscar'}
+      ]);
+      gestorDB.gestorMercaderes.buscarNombre(buscar_nombre_m.nombre);
+    break;
+    case 'Buscar por ubicación':
+      const buscar_ubi_m = await inquirer.prompt([
+        {type: 'input', name:'ubicacion', message: 'Ubicacion de los mercaderes a buscar'}
+      ]);
+      gestorDB.gestorMercaderes.buscarUbicacion(buscar_ubi_m.ubicacion);
+    break;
+    case 'Buscar por tipo':
+      const tipo = await inquirer.prompt([
+        {type: 'input', name:'tipo_m', message: 'Tipo de los mercaderes a buscar (Herrero, Alquimista, Mercader general)'}
+      ])
+      let tipo_buscar : tipoMercader = tipo.tipo_m;
+      gestorDB.gestorMercaderes.buscarTipo(tipo_buscar);
+    break;
+    case 'Volver':
+    return;
+  }
 }
 
+/**
+ * Funcion para gestionar los bienes del inventario por parte del
+ * usuario que emplea nuestro juego 
+ */
 async function gestionarInventario() {
-  console.log('Funcionalidad aún no implementada.');
+  const { accion } = await inquirer.prompt([
+    {
+      type: 'list',
+      name: 'accion',
+      message: 'Seleccione una opción para el inventario:',
+      choices: [
+        'Añadir un Bien',
+        'Eliminar un Bien',
+        'Modificar un Bien',
+        'Consultar Inventario',
+        'Consultar un Bien',
+        'Volver'
+      ]
+    }
+  ]);
+  switch(accion){
+    case 'Añadir un bien':
+      const añadir_b = await inquirer.prompt([
+        {type:'input', name:'id_b', message:'Id del bien'},
+        { type: 'input', name: 'nombre', message: 'Nombre del bien:' },
+        { type: 'input', name: 'descripcion', message: 'Descripción del bien:' },
+        {type: 'input', name: 'material', message: 'Material del bien: '},
+        {type: 'input', name: 'peso', message: 'Peso del bien: '},
+        { type: 'input', name: 'valor', message: 'Valor en coronas del bien:' }
+      ]);
+      let tipo_m : materialBienes = añadir_b.tipo;
+      if(Number(añadir_b.id_b) in gestorDB.inventario.getIDs()){
+        console.log("Ese id ya está ocupado.\n");
+        break;
+      }
+      const nuevoBien = new Bien(Number(añadir_b.id_b), añadir_b.nombre, añadir_b.descripcion, añadir_b.tipo_m, Number(añadir_b.peso), Number(añadir_b.valor));
+      gestorDB.inventario.añadirBien(nuevoBien);
+      console.log('Mercader añadido con éxito.');
+    break;
+    case 'Eliminar un Bien' :
+      const elim_b = await inquirer.prompt([
+        {type: 'input', name: 'id', message: 'ID del bien a eliminar'}
+      ]);
+      const eliminar = gestorDB.inventario.buscarID(Number(elim_b.id));
+      if (eliminar !== undefined) {
+        gestorDB.inventario.eliminarBien(eliminar);
+      } else {
+        console.log("No existe mercader con ese ID.\n");
+      }
+    break;
+    case 'Modificar un Bien' :
+      const modificarB = await inquirer.prompt([
+        { type: 'input', name: 'id', message: 'ID del mercader a modificar:' }
+      ]);
+      const idBien = Number(modificarB.id);
+      if (!gestorDB.inventario.buscarID(idBien)) {
+        console.log("No existe Bien con ese ID.\n");
+        break;
+      }
+      const { campo } = await inquirer.prompt([
+        {
+          type: 'list',
+          name: 'campo',
+          message: '¿Qué desea modificar?',
+          choices: ['Nombre', 'Descripcion', 'Material', 'Peso', 'Valor', 'Cancelar']
+        }
+      ]);
+      if (campo === 'Cancelar') break;
+      const nuevoValor = await inquirer.prompt([
+        { type: 'input', name: 'valor', message: `Nuevo ${campo.toLowerCase()} del bien:` }
+      ]);
+      let exito = false;
+      if (campo === 'Nombre') exito = gestorDB.inventario.modificarNombre(idBien, nuevoValor.valor);
+      else if (campo === 'Descipcion') exito = gestorDB.inventario.modificarDescripcion(idBien, nuevoValor.valor);
+      else if (campo === 'Peso') exito = gestorDB.inventario.modificarPeso(idBien, Number(nuevoValor.valor));
+      else if (campo === 'Valor') exito = gestorDB.inventario.modificarValorCoronas(idBien, Number(nuevoValor.valor));
+      else if (campo === 'Material') {
+        let nuevo_material : materialBienes = nuevoValor.valor
+        exito = gestorDB.inventario.modificarMaterial(idBien, nuevo_material);
+      }  
+      if (exito) {
+        console.log('Cliente modificado con éxito.');
+        await gestorDB.outDB();
+      } else {
+        console.log('No se pudo modificar el cliente.');
+      }
+    break;
+    case 'Consultar Inventario' :
+      console.log(gestorDB.inventario.MostrarBienes());
+    break;
+    case 'Consultar un Bien' :
+      const consulta = await inquirer.prompt([
+        {type: 'input', name:'consulta', message: 'Nombre o descripción del bien a buscar: '},
+        {type: 'input', name: 'formato', message: 'Alfa para que sea alfabeticamente, num para que sea por valor en coronas: '},
+        {type: 'input', name:'orden', message: 'Orden, asc para ascendete o desc para descendente: '}
+      ]);
+      gestorDB.inventario.consultarBien(consulta.consulta, consulta.formato, consulta.orden);
+    break;
+    case 'Volver' :
+    return;
+  }
 }
 
 async function hacerTransaccion() {
   console.log('Funcionalidad aún no implementada.');
 }
 
+/**
+ * Funcion que permite gestionar las opciones de informe que 
+ * nuestro usuario quiere realizar a lo largo del juego
+ */
 async function generarInforme() {
   const { tipoInforme } = await inquirer.prompt([
     {
