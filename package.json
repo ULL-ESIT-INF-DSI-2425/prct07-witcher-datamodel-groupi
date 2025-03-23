@@ -48,7 +48,7 @@
   "scripts": {
     "doc": "typedoc",
     "test": "vitest run",
-    "coverage": "vitest run --coverage --coverage.exclude=src/main.ts,src/index.ts,src/DataBaseGestor.ts --coverage.include=src/*.ts",
+    "coverage": "vitest run --coverage --coverage.exclude=src/{main,index,tools,DataBaseGestor}.ts --coverage.include=src/{Bien,Cliente,GestorClientes,GestorMercaderes,Inventario,Mercader,Personaje,Transaccion}.ts",
     "build": "tsc",
     "start": "npm run build && node dist/ejercicio-1.js",
     "ej1": "node dist/ejercicio-1.js",
