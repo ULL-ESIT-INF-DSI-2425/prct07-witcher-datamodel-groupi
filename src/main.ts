@@ -390,7 +390,77 @@ async function gestionarInventario() {
 }
 
 async function hacerTransaccion() {
-  console.log('Funcionalidad aún no implementada.');
+  // console.log('Funcionalidad aún no implementada.');
+  const { accion } = await inquirer.prompt([
+    {
+      type: 'list',
+      name: 'accion',
+      message: 'Seleccione una opción para la transaccion:',
+      choices: [
+        'Comprar',
+        'Vender',
+        'Devolver',
+        'Volver'
+      ]
+    }
+  ]);
+  switch(accion) {
+    case 'Comprar':
+      const { idBienComprar } = await inquirer.prompt([{
+        type: 'input',
+        name: 'idBienComprar',
+        message: 'Ingrese el ID del bien que desea comprar:',
+        validate: (input) => !isNaN(input) ? true : 'Por favor, ingrese un número válido.',
+      }]);
+      const bienComprar = gestorDB.inventario.buscarID(Number(idBienComprar));
+      if (bienComprar) {
+        gestorDB.inventario.añadirBien(bienComprar); // Asumimos que ya se sabe qué bien se compra
+        console.log(`Bien '${bienComprar.nombre}' comprado con éxito.`);
+      } else {
+        console.log('Bien no encontrado en la colección.');
+      }
+      break;
+    case 'Vender': 
+      const { idBienVender } = await inquirer.prompt([
+        {
+          type: 'input',
+          name: 'idBienVender',
+          message: 'Ingrese el ID del bien que desea vender:',
+          validate: (input) => !isNaN(input) ? true : 'Por favor, ingrese un número válido.',
+        }
+      ]);
+      const bienVender = gestorDB.inventario.buscarID(Number(idBienVender));
+      if (bienVender) {
+        const mensajeEliminacion = gestorDB.inventario.eliminarBien(bienVender);
+        console.log(mensajeEliminacion || 'Error al vender el bien.');
+      } else {
+        console.log('Bien no encontrado en la colección.');
+      }
+      break;
+    case 'Devolver':
+      // Seleccionar el bien a devolver
+      const { idBienDevolver } = await inquirer.prompt([
+        {
+          type: 'input',
+          name: 'idBienDevolver',
+          message: 'Ingrese el ID del bien que desea devolver:',
+          validate: (input) => !isNaN(input) ? true : 'Por favor, ingrese un número válido.',
+        }
+      ]);
+      const bienDevolver = gestorDB.inventario.buscarID(Number(idBienDevolver));
+      if (bienDevolver) {
+        gestorDB.inventario.añadirBien(bienDevolver); // Suponemos que la devolución es igual a una compra
+        console.log(`Bien '${bienDevolver.nombre}' devuelto correctamente.`);
+      } else {
+        console.log('Bien no encontrado en la colección.');
+      }
+      break;
+    case 'Volver':
+      console.log('Volviendo al menú principal...');
+      break;
+    default:
+      console.log('Opción no válida.');
+  }
 }
 
 /**
