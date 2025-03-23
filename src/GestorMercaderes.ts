@@ -1,4 +1,4 @@
-import { Mercader, tipoMercader } from "./Mercader.ts";
+import { Mercader, tipoMercader } from "./Mercader.js";
 /**
  * Clase para representar la colleción de Mercaderes
  */

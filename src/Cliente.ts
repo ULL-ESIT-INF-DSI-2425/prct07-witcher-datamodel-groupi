@@ -1,4 +1,4 @@
-import { Personaje } from "./Personaje.ts";
+import { Personaje } from "./Personaje.js";
 
 export type razaCliente = "Humano" | "Elfo" | "Enano" | "Hechicero";
 

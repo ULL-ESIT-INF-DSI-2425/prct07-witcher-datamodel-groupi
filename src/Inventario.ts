@@ -1,4 +1,4 @@
-import { Bien, materialBienes} from "./Bien.ts";
+import { Bien, materialBienes} from "./Bien.js";
 
 type modoOrdenar = "alfa" | "coronas";
 type orden = "asc" | "desc";

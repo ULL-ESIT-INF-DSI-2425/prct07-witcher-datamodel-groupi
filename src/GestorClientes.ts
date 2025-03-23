@@ -1,4 +1,4 @@
-import { Cliente, razaCliente } from "./Cliente.ts";
+import { Cliente, razaCliente } from "./Cliente.js";
 /**
  * Clase para representar la colleción de Clientes
  */

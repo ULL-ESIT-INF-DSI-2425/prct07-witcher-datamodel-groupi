@@ -1,8 +1,8 @@
-import { Bien, materialBienes } from "./Bien.ts";
-import { Cliente, razaCliente } from "./Cliente.ts";
-import { Mercader, tipoMercader } from "./Mercader.ts";
-import { Transaccion, NuevaTransaccion } from "./Transaccion.ts";
-import { Inventario } from "./Inventario.ts";
+import { Bien, materialBienes } from "./Bien.js";
+import { Cliente, razaCliente } from "./Cliente.js";
+import { Mercader, tipoMercader } from "./Mercader.js";
+import { Transaccion, NuevaTransaccion } from "./Transaccion.js";
+import { Inventario } from "./Inventario.js";
 import { GestorDB } from './DataBaseGestor.js';
 import inquirer from "inquirer";
 
