@@ -98,4 +98,27 @@ describe("THE WITCHER - Probando clase GestorCliente", () => {
       _ubicacion: "Novigrado"
     });
   });
+
+  let gestor: GestorCliente;
+    beforeEach(() => {
+      // Crear clientes desordenados por ID
+      const clientes = [
+        new Cliente(3, "Carlos", "Madrid", "Humano"),
+        new Cliente(1, "Ana", "Barcelona", "Elfo"),
+        new Cliente(2, "Beatriz", "Valencia", "Enano"),
+      ];
+      gestor = new GestorCliente(clientes);
+    });
+  test("Comrpobar ordenar clientes por ID", () => {
+    gestor.ordenarID();
+    const idsOrdenados = gestor.getIDs();
+    expect(idsOrdenados).toEqual([1, 2, 3]); // IDs deben estar ordenados
+  });
+  test("ordenarPorID debe mantener la cantidad de clientes", () => {
+    const cantidadAntes = gestor.tamColeccionClientes();
+    gestor.ordenarID();
+    const cantidadDespues = gestor.tamColeccionClientes();
+    
+    expect(cantidadAntes).toBe(cantidadDespues); // No debe perder clientes
+  });
 });

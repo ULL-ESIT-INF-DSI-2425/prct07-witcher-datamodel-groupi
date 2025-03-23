@@ -113,5 +113,24 @@ describe("THE WITCHER - Probando clase Inventario", () => {
       "_valorEnCoronas": 3,
     });
   });
+  let inventario: Inventario;
+  beforeEach(() => {
+    const bienes = [
+      new Bien(1, "Zafiro", "Gema preciosa", "esencia mágica", 10, 500),
+      new Bien(2, "Esmeralda", "Piedra verde", "esencia mágica", 8, 400),
+      new Bien(3, "Rubí", "Piedra roja", "esencia mágica", 9, 450),
+    ];
+    inventario = new Inventario(bienes);
+  });
+  test("Ordenar bienes alfabéticamente en orden ascendente", () => {
+    inventario.ordenarPorNombre();
+    const nombresOrdenados = inventario.coleccionBienes.map(b => b.nombre);
+    expect(nombresOrdenados).toEqual(["Esmeralda", "Rubí", "Zafiro"]);
+  });
+  test("Ordenar bienes por valor en coronas (descendente)", () => {
+    inventario.ordenarPorValorCoronas();
+    const valoresOrdenados = inventario.coleccionBienes.map(b => b.valorEnCoronas);
+    expect(valoresOrdenados).toEqual([500, 450, 400]);
+  });
 });
 

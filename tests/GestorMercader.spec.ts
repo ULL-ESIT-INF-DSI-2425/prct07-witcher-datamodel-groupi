@@ -103,5 +103,20 @@ describe("THE WITCHER - Probando clase GestorMercader", () => {
       _ubicacion: "Velen"
     });
   });
+  let gestor: GestorMercader;
+  beforeEach(() => {
+    // Crear mercaderes desordenados por ID
+    const mercaderes = [
+      new Mercader(5, "Pedro", "Madrid", "Herrero"),
+      new Mercader(2, "Lucas", "Barcelona", "Herrero"),
+      new Mercader(3, "Elena", "Valencia", "Herrero"),
+    ];
+    gestor = new GestorMercader(mercaderes);
+  });
+  test("Comprobar ordenar mercaderes por ID", () => {
+    gestor.ordenarID(); // Ejecutar ordenación
+    const idsOrdenados = gestor.getIDs();
+    expect(idsOrdenados).toEqual([2, 3, 5]); // IDs deben estar ordenados
+  });
 });
 

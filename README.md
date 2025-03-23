@@ -14,3 +14,6 @@
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=ULL-ESIT-INF-DSI-2425_prct07-witcher-datamodel-groupi&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=ULL-ESIT-INF-DSI-2425_prct07-witcher-datamodel-groupi)
 
 [! Link al libro](https://puntoq.ull.es/permalink/34ULL_INST/kkpv9/alma991000487140308901)
+
+# Informe de la práctica
+En este informe se detallarán una serie de problemas que hemos tenido a la hora de resolver la práctica.

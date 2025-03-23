@@ -131,4 +131,10 @@ export class GestorMercader {
     mercader.ubicacion = nuevaUbicacion;
     return true;
   }
+  /**
+   * Método para ordenar la colección de mercaderes por ID de menor a mayor
+   */
+  ordenarID(): void {
+    this._coleccionMercaderes.sort((a, b) => a.ID - b.ID);
+  }
 }

@@ -160,4 +160,16 @@ export class Inventario  {
     bien.valorEnCoronas = nuevoValor;
     return true;
   }
+  /**
+   * Método para ordenar los bienes alfabéticamente por nombre (ascendente)
+   */
+  ordenarPorNombre(): void {
+    this._coleccionBienes.sort((a, b) => a.nombre.localeCompare(b.nombre));
+  }
+  /**
+   * Método para ordenar los bienes por su valor en coronas (de mayor a menor)
+   */
+  ordenarPorValorCoronas(): void {
+    this._coleccionBienes.sort((a, b) => b.valorEnCoronas - a.valorEnCoronas);
+  }
 }

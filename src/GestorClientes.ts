@@ -132,4 +132,10 @@ export class GestorCliente {
     cliente.ubicacion = nuevaUbicacion;
     return true;
   }
+  /**
+   * Método para ordenar los clientes por su ID de menor a mayor
+   */
+  ordenarID(): void {
+    this.coleccionClientes.sort((a,b) => a.ID - b.ID);
+  }
 }
